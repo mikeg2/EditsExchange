@@ -1,0 +1,5 @@
+a(href="{{ getUrlForGenre(genre.id) }}")
+    div(class="genre-{{genre.id}}").genre-item-content
+        span.name {{ genre.name }}
+        span.description {{ genre.description }}
+        span.description-message(ng-show="!genre.description") We haven't had time to write a description yet

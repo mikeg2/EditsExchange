@@ -1,0 +1,34 @@
+div.form-like
+    //- TODO: Redo form with angularjs validate directives and submits
+    //- TODO: Redo all forms to make them standard complient and less messy
+    div.group-settings.form-section(ng-controller="groupSettings")
+        ul.error-box(ng-if="errors != undefined && errors.length != 0")
+            li(ng-repeat="error in errors") {{ error.msg }}
+        ul.success-box(ng-if="successes != undefined && successes.length != 0")
+            li(ng-repeat="success in successes") {{ success.msg }}
+        .form-group
+            label(for="username") Group Name
+            input(type="textfield" ng-model="groupEditable.name")
+        .form-group
+            label(for="username") Description
+            textarea(type="textfield" ng-model="groupEditable.description")
+        .form-group
+            label(for="username") Group Photo
+            .drop-box(ng-file-drop="pickGroupPicture($files[0])")
+                span.message Drop Photo
+                img(ng-src="{{ groupEditable.groupPicture.url }}")
+        span.submit-button(ng-click="saveSettings()") Save Changes
+    div.group-admin.form-section(ng-controller="groupAdmin")
+        ul.error-box(ng-show="errors != undefined && errors.length != 0")
+            li(ng-repeat="error in errors") {{ error.msg }}
+        ul.success-box(ng-show="successes != undefined && successes.length != 0")
+            li(ng-repeat="success in successes") {{ success.msg }}
+        .form-group
+            label(for="newAdminUsername") Choose Group Leader to Replace You
+            user-input(ng-model="newAdmins" max-tags="1")
+            span.error-message(ng-show="newAdmins.length > 1") There can (currently) only be one admin
+        .form-group
+            label(for="admin-password") Your Password:
+            input(type="password" ng-model="password")
+        span.submit-button(ng-click="saveSettings()" ng-class="{unclickable: !isFormValid()}") Change Admin
+        .input-note You will not be able to undo this action

@@ -1,0 +1,35 @@
+extends ../skeleton
+block content
+  div.page-hints
+    a(href="/user/groups") 
+      span.link Go to My Groups
+  div#searching(ng-controller="searchGroups")
+    .central-search-box()
+          label.label-major.text-field-label(for='search')
+            | Search Groups: 
+          input(type="textfield" placeholder="What do you like to write about?" ng-model="searchTerm" focus-on="searchBoxFocus" ng-init="searchBoxFocus=true")
+    div.search-display(ng-show="searching")
+      ul.group-list()
+        li(ng-repeat="group in searchResults" group-item="group" me="user")
+      .display-message(ng-show="!longEnough") Your search isn't long enough
+      .display-message(ng-show="searchResults.length == 0 && longEnough") No search results
+  div#browsing(ng-show="!searching")
+    .browsing-section(ng-controller="newGroups")
+      h2 Newest Groups
+      ul.group-list
+        li(ng-repeat="group in newestGroups" group-item="group" me="user")
+    .browsing-section(ng-controller="randomGroups")
+      h2 Random Groups
+      ul.group-list
+        li(ng-repeat="group in randomGroups" group-item="group" me="user")
+
+block css
+  link(rel='stylesheet', href='/styles/groups.css')
+
+block jscript
+  script(src="/js/ang/app/group/groups/groupsApp.js")
+
+block vars
+  - var page = "Groups"
+  - var custom = true
+  - var app_name = "groupsApp"

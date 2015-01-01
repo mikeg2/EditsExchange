@@ -1,0 +1,4 @@
+div.comment-box(ng-class="{'read-only': readOnly}")
+  textarea#comment-entry-area(ng-model="comment.text")
+  span.button#comment-delete-button(ng-click="delete()") Delete Comment
+  span#exit-button(ng-click="hide()") X

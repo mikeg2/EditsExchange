@@ -1,0 +1,68 @@
+extends ../skeleton
+block content
+    ol.page-location
+        li.page Users
+        li.page {{ userPageUser.username }}
+    section.user-bio(ng-init="userPageUserId = '#{userPageUserId}'")
+      .user-identifier
+        img(ng-src="{{ userPageUser.profilePicture.url }}")
+        span.username {{ userPageUser.username }}
+      .points-wheel
+        span.label Karma Points
+      .about-me
+        span.label About Me
+        span.text(ng-show="userPageUser.aboutMe") {{ userPageUser.aboutMe }}
+        span.note(ng-show="!userPageUser.aboutMe") {{ userPageUser.username }} hasn't filled out his/her bio yet. Send them a message to remind them
+      .favorite-genres
+        span.label Likes to write 
+        span.genres {{ userPageUser.favoriteGenres | subArray:'name' | joinBy:', '}}
+      ul.meta
+        li
+          span.label Last Login
+          span.info {{ userPageUser.lastLogin | date: "MMMM d, yyyy 'at' h:mm a"  }}
+        li
+          span.label Joined Date
+          span.info {{ userPageUser.joinedDate | date: "MMMM d, yyyy"  }}
+    .subscribe-section(ng-show="showSubscribeButton() && user !== undefined" ng-controller="subscriptionController")
+      .button(ng-show="!userPageUser.meta.imSubscribed" ng-click="subscribe()") Subscribe / Favorite
+      .button(ng-show="userPageUser.meta.imSubscribed" ng-click="unsubscribe()") Unsubscribe
+    .message-section(ng-show="showMessageButton() && user !== undefined")
+      .button(ng-click="modal.showMyChatWithUser = true") Send Message
+    section.draft-scroll
+      h2.section-title My Drafts
+      .content
+        span.message(ng-show="userPageUser.drafts.length == 0") {{ userPageUser.username }} hasn't posted any drafts
+        step-scroll.step-scroll(ng-show="userPageUser.drafts.length != 0")
+          li(ng-repeat="draft in userPageUser.drafts" draft-item draft="draft" me="user" show-draft-info="showDraft(draft)" class="draft-item")
+    section.groups
+      h2.section-title Groups
+      ul.content.group-list-light
+        a(href="{{ url.getUrlForGroup(group.id) }}" ng-repeat="group in userPageUser.groups")
+          li.group-item(group-item="group")
+    section.favorite-authors
+      h2.section-title Favorite Authors
+      ul.content.user-list
+        li(ng-repeat="favoriteAuthor in userPageUser.subscriptions")
+          img.thumbnail-image(ng-src="{{ favoriteAuthor.profilePicture.url }}")
+          span.username {{ favoriteAuthor.username }}
+    section.activity
+      h2.section-title Activity
+      .content
+        em Feature coming soon
+    modal.draft-display-modal(class="basic-modal" show="modal.showDraftModal" title="modal.draftToShow.title")
+      draft-display(draft="modal.draftToShow" user="user" class="draft-display")
+    modal.chat-modal(show="modal.showMyChatWithUser" title="'Chat with ' + userPageUser.username" thumbnail="userPageUser.profilePicture.url" )
+      chat-display(me="user" with-users="userPageUser" activate="modal.showMyChatWithUser" class="chat")
+
+block css
+  link(rel='stylesheet', href='/styles/user-page.css')
+  link(rel='stylesheet', href='/styles/genre-colors.css')
+
+block jscript
+  script(src="/js/ang/app/author/userPage/userPageApp.js")
+
+block vars
+  - var page = "User Page"
+  - var custom = true
+  - var app_name = "userPageApp"
+  - var main_controller = "mainController"

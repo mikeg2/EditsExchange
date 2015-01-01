@@ -1,0 +1,17 @@
+div
+    form.new-discussion(name="newDiscussionForm" novalidate)
+        .form-section#meta-section
+            .form-group
+                label(for="name") Topic
+                input(type="textfield" name="topic" ng-model="newDiscussion.topic" required)
+                span(class="error-message" ng-show="newDiscussionForm.topic.$invalid && (!newDiscussionForm.topic.$pristine || attemptSubmit)") A topic is required
+            .form-group
+                label(for="description") First Post
+                span.input-note Elaborate on the topic
+                message-writer(ng-model="newDiscussion.firstPostText" required)
+                span(class="error-message" ng-show="newDiscussionForm.description.$invalid && (!newDiscussionForm.description.$pristine || attemptSubmit)") A first post is required
+            //- .form-group
+            //-     label(for="emails") Invite Friends via Emails
+            //-     tags-input(display-property="emails" place-holder="Type in emails" ")
+        .form-section
+            div.new-discussion-button(ng-click="submit()") Start New Discussion

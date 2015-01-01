@@ -1,0 +1,43 @@
+div
+  a()
+    article
+      .info-group.image-info-group
+        h2.group-item-label Image
+        img.image(ng-src="{{ group.groupPicture.url }}")
+      .info-group.name-info-group
+        h2.group-item-label.link Name
+        a(href="{{ getURLForGroup(group.id) }}")
+          span.name
+            | {{ group.name }}
+      .info-group.description-info-group
+        h2.group-item-label Description
+        span.description {{ group.description }}
+      .meta
+        .info-group(stop-event ng-show="me.id == group.admin.id")
+          h2.link(ng-click="showAdminPanel = true") Show admin panel
+        .info-group.admin-info-group
+          h2.group-item-label Group Leader
+          span.admin
+            a(href="{{ getURLForUser(group.admin.id) }}" stop-event) {{ group.admin.username }}
+        .info-group.num-members-info-group
+          h2.group-item-label Number of Members
+          span.num-members
+            | {{ group.members.length }}
+        .info-group.last-activity-info-group
+          h2.group-item-label Last Post
+          span.last-activity
+            | {{ group.lastActivity | date: "M/d/yy 'at' h:mm a" }}
+  modal.basic-modal(show="showAdminPanel" title="group.name + ' Settings'")
+     group-admin-panel.group-admin-panel(group="group" on-update="onUpdate($group)")
+    //- .info-group.sample-info-group
+    //-   h2.group-item-label Sample
+    //-   span.sample {{ group.sample }}
+    //- .info-group.words-info-group
+    //-   h2.group-item-label Words
+    //-   span.words {{ group.wordCount }}
+    //- .info-group.edits-info-group
+    //-   h2.group-item-label Edits
+    //-   span.number-of-edits {{ group.edits.length }}
+    //- .info-group.genre-info-group
+    //-   h2.group-item-label Genre
+    //-   span.number-of-edits {{ group.genre || "None" }}

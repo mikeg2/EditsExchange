@@ -1,0 +1,43 @@
+@import "./draft-page.less";
+
+insert {
+    background-color: red;
+}
+
+delete {
+    text-decoration: line-through;
+}
+
+.comment {
+    text-decoration: underline;
+    &:hover {
+        background-color: yellow;
+        cursor: pointer;
+    }
+}
+
+.t_Tooltip_comment {
+    z-index: 10000000000 !important;
+    .t_Content {
+        font-size: 17px;
+        // padding: 7px 8px;
+        // background-color: @color-1;
+        // border: 0.1em solid @color-5;
+        // .t_ContentContainer {
+        //     color: #333;
+        //     font-size: 20px;
+        //     line-height: 16px;
+//        }
+    }
+    // &, .t_Skin, .t_Shadow {
+    //     height: 4em;
+    //     width: 5em;
+    // }
+    // .t_Skin {
+    //     display: none;
+    // }
+}
+
+p {
+    margin-bottom: 1em;
+}

@@ -1,0 +1,21 @@
+extends ../skeleton
+block content
+    // Add in special list for unread group items or "Join a Group" if none are there
+    // Change name from genre list to draft-list or something
+    .genre-lists(ng-controller="GenreListsController")
+        .genre-list-wrapper.draft-scroll(ng-repeat="genreList in genreLists" ng-id="genre-list-{{ genreList.genre.id }}")
+            h2 {{ genreList.genre.name }}
+            step-scroll(load-next="genreList.loadNext(numItems)")
+                li(ng-repeat="draft in genreList.drafts" draft-item ng-click="showDraft(draft)" draft="draft" class="draft-item")
+    modal.draft-display-modal(class="basic-modal" show="modal.showDraftModal" title="modal.draftToShow.title")
+      draft-display(draft="modal.draftToShow" user="user" class="draft-display")
+block css
+  link(rel='stylesheet', href='/styles/exchange.css')
+
+block jscript
+  script(src="/js/ang/app/exchange/exchangeApp.js")
+
+block vars
+  - var page = "Exchange"
+  - var custom = false
+  - var app_name = "exchangeApp"

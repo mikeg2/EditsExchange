@@ -1,0 +1,34 @@
+extends ../skeleton
+block content
+  div#searching(ng-controller="searchGenres")
+    .central-search-box()
+          label.label-major.text-field-label(for='search')
+            | Search Genres: 
+          input(type="textfield" placeholder="Literary, Flash Fiction, Fantasy, etc." ng-model="searchTerm" focus-on="searchBoxFocus" ng-init="searchBoxFocus=true")
+    div.search-display(ng-show="searching")
+      ul.genre-list
+        li(ng-repeat="genre in searchResults" genre-item="genre" me="user")
+      .display-message(ng-show="!longEnough") Your search isn't long enough
+      .display-message(ng-show="searchResults.length == 0 && longEnough") No search results
+  div#browsing(ng-show="!searching")
+    .browsing-section(ng-controller="favoriteGenres" ng-if="user")
+      h2 Your Favorite Genres
+      ul.genre-list(ng-show="favoriteGenres.length > 0")
+        li(ng-repeat="genre in favoriteGenres" genre-item="genre" me="user")
+      span(ng-show="favoriteGenres.length == 0") Post a few drafts so we know what you like to write about
+    .browsing-section(ng-controller="allGenres")
+      h2 All Genres
+      ul.genre-list()
+        li(ng-repeat="genre in allGenres" genre-item="genre" me="user")
+
+block css
+  link(rel='stylesheet', href='/styles/genres.css')
+  link(rel='stylesheet', href='/styles/genre-colors.css')
+
+block jscript
+  script(src="/js/ang/app/genre/genres/genresApp.js")
+
+block vars
+  - var page = "Genres"
+  - var custom = true
+  - var app_name = "genresApp"

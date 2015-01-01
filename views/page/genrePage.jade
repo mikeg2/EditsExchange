@@ -1,0 +1,26 @@
+extends ../skeleton
+block content
+    section.basic-info.genre-page-section
+       span.name(class="genre-{{ genre.id }}") {{ genre.name }}
+       span.description {{ genre.description }}
+    section.drafts.draft-scroll.genre-page-section(ng-controller="infiniScrollController" ng-if="genre")
+      h2 Recent Posts in {{ genre.name }}
+      step-scroll.step-scroll(load-next="genre.loadNextDrafts(numItems)")
+        li(ng-repeat="draft in genre.drafts" draft-item ng-click="showDraft(draft)" draft="draft" class="draft-item")
+    //- Todo Add in recent writers
+    modal.draft-display-modal.basic-modal(show="modal.showDraftModal" title="modal.draftToShow.title")
+      draft-display(draft="modal.draftToShow" user="user" class="draft-display")
+
+
+block css
+  link(rel='stylesheet', href='/styles/genre-page.css')
+
+block jscript
+  script(src="/js/ang/app/genre/genrePage/genrePageApp.js")
+
+block vars
+  - var page = "Genre Page"
+  - var custom = true
+  - var app_name = "genrePageApp"
+  - var main_controller = "mainController"
+  - var main_init = "genreId = '" + genreId + "'"

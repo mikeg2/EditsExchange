@@ -1,0 +1,82 @@
+@import "./master.less";
+
+@media screen and (max-width: 772px) {
+    nav {
+        font-size: 0.87em;
+    }
+}
+
+@media screen and (max-width: 680px) {
+    nav {
+        font-size: 0.75em;
+    }
+}
+
+// For toolbar, depending on number of elements
+@media screen and (max-width: @break-sm) {
+    nav {
+        font-size: 1em;
+        .user-tab {
+            width: 100%;
+            text-align: center;
+        }
+    }
+    ul.main-navigation {
+        width: 100%;
+        li {
+            border: none !important;
+            display: block;
+            float: none;
+            margin: 0 !important;
+            width: 100%;
+            &:not(.selected):hover {
+                .pf('transform', 'translateX(0) !important');
+            }
+            &:active {
+                background-color: @color-nav-selected;
+            }
+        }
+        >li.selected {
+            .pf('transform', 'translateY(0) !important');
+        }
+        margin-bottom: 0.5em;
+    }
+    
+    .basic-modal {
+        .modal-body {
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 100%;
+            width: 100%;
+        }
+        &.shown {
+            .modal-body {
+                top: 0;
+            }
+            .modal-overlay {
+                opacity: 0.0;
+            }
+        }
+    }
+
+    .group-list {
+        li {
+            height: auto;
+            .image {
+                margin: 0;
+                width: 100%;
+                height: auto;
+            }
+            .meta {
+                .info-group {
+                    display: block;
+                    float: none;
+                }
+            }
+            .description {
+                height: auto;
+            }
+        }
+    }
+}

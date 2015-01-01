@@ -1,0 +1,44 @@
+extends ../skeleton
+block content
+    ol.page-location
+        li.page Drafts
+        li.page {{ draft.title }}
+    .draft-basics
+        .title {{ draft.title }}
+        .description-block
+            .description {{ draft.sample }}
+            ul.meta 
+              li {{ draft.genres | subArray:'name' | joinBy:', ' }}
+              li {{ draft.wordCount }} words
+              li {{ draft.edits.length }} / 5{{ draft.maxEdits }} Edits
+              li Published {{ draft.publishedOn }}
+        .user-identifier-container
+          a(href="{{ urls.getUrlForUser(draft.author.id) }}")
+            .user-identifier
+              img(ng-src="{{ draft.author.profilePicture.url }}")
+              span.username {{ draft.author.username }}
+    page-viewer.page-viewer(text="draft.content")
+    ul.options 
+      a(ng-href="{{ urls.getUrlForEditEditor(draft.id, user.id) }}")
+        li Edit
+      li Share
+      li Favorite Author
+    .edits-section
+        h1.page-section-title#edit-section-title Edits
+        ul.edits-list
+          li(ng-repeat="edit in draft.edits | orderBy:'-firstEdited'" edit-item="edit" user="user")
+        .no-edits(ng-show="draft.edits.length == 0")
+          | "{{ draft.title }}" doesn't have any edits yet. Be the first by clicking the "edit" button under the reader.
+
+block css
+  link(rel='stylesheet' href='/js/lib/tipped/css/tipped/tipped.css')
+  link(rel='stylesheet', href='/styles/draft-page.css')
+
+block jscript
+  script(src="/js/ang/app/draftPage/draftPageApp.js")
+
+block  vars
+  - var page = "Draft Page"
+  - var main_controller = "main"
+  - var custom = true
+  - var main_init = "draftId = '" + draftId + "'"

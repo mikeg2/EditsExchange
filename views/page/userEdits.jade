@@ -1,0 +1,27 @@
+extends ../skeleton
+block content
+    .central-search-box(focus-on="search-box-focus" )
+        label.label-major.text-field-label(for='search')
+          | Search Drafts You've Edited:
+        input(type="textfield" ng-model="search_term" focus-on="searchBoxFocus" ng-init="searchBoxFocus=true")
+    ul.draft-list(ng-controller="editListAreaController" )
+        a(ng-href="{{ getURLForEditEditor(draft.id, user.id) }}" target="_blank" ng-repeat="draft in (displayDrafts = (user.editedDrafts | orderBy:'publicationDate':true | fuzzy:search_term:['title']:0.3))")
+          li(draft-item draft="draft" class="draft-item")
+        .display-message(ng-show="(searchToLong = search_term.length > 32)") Search query too long! Try something shorter.
+        .display-message(ng-show="displayDrafts.length == 0 && user.editedDrafts.length > 0 && !searchToLong") No Results
+        .display-message(style="text-align: left" ng-show="user.editedDrafts.length == 0")
+          | Once you start editing other author's drafts, they will appear here. You'll be able to click on them to add additional edits even after you've stopped editing.
+          br
+          br
+          | Check out the homepage to get started!
+
+block css
+  link(rel='stylesheet', href='/styles/draft.css')
+
+block jscript
+  script(src="/js/ang/app/user/edits/editsApp.js")
+
+block vars
+  - var page = "Edits"
+  - var custom = true
+  - var app_name = "editsApp"

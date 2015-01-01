@@ -1,0 +1,36 @@
+{
+  "name": "editsexchange",
+  "private": true,
+  "version": "0.0.0",
+  "description": "a Sails application",
+  "dependencies": {
+    "sails": "0.10.0-rc8",
+    "grunt": "0.4.1",
+    "sails-disk": "~0.9.0",
+    "ejs": "0.8.4",
+    "optimist": "0.3.4",
+    "jade": "*",
+    "async": "*",
+    "lodash": "*",
+    "identicon": "*",
+    "file": "*",
+    "express": "*",
+    "skipper-disk": "*",
+    "node-mailer": "*",
+    "passport": "*",
+    "passport-facebook": "*",
+    "moment": "*",
+    "sails-mongo": "~0.10.*"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "debug": "node debug app.js"
+  },
+  "main": "app.js",
+  "repository": "",
+  "author": "",
+  "license": "",
+  "devDependencies": {
+    "grunt-newer": "~0.7.0"
+  }
+}

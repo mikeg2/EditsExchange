@@ -1,0 +1,60 @@
+doctype html
+html(lang='en')
+head
+    block vars
+    block css
+    title
+        | #{page}
+  body(ng-init='modal={};' + (req.user == undefined ? "" : 'user=#{JSON.stringify(req.user[0].toREST())};') ng-click="$" ng-class="{'modal-open': modal.stat.number_visible > 0}" class="color-mode-outer-{{ editorSettings.colorMode }}" )
+    noscript Javascript is neccessary to use this site.
+    header
+      nav#header-nav
+        ul.main-navigation
+            li.selected #{page}
+            if page != "Exchange"
+                a(href="/exchange")
+                    li Exchange
+            if page != "Genres"
+                a(href="/genres")
+                    li Genres
+            if page != "Groups"
+                a(href="/groups")
+                    li Groups
+        if req.user
+            div.right-side-navigation.user-tab
+                .user-tag
+                    img.thumbnail(ng-src="{{ user.profilePicture.url }}")
+                    span.username {{ user.username | cut:false:10 }}
+                    span.arrow-down
+                ul.user-pages-navigation
+                    a(href="/user/drafts")
+                        li Drafts
+                    a(href="/user/edits") 
+                        li Edits
+                    a(href="/users/{{ user.id }}/user-page")
+                        li My Page
+                    a(href="/user/subscriptions")
+                        li Follows
+                    a(href="/user/messages")
+                        li Messages 
+                    a(href="/user/groups")
+                        li My Groups
+                    a(href="/user/settings")
+                        li Settings
+                    a(href="/auth/logout")
+                         li#logout-button Log Out
+        else
+            a.right-side-navigation(href="/auth?from=#{req.path}")
+                div.log-in-button Log In
+    block total-content
+        .main-body(ng-controller=main_controller ng-init=main_init)
+            block content
+    // Javascript
+
+    //TODO: Remove unused fonts
+    script(src="//use.typekit.net/jvc5qkz.js")
+    script()
+        | try{Typekit.load();}catch(e){}
+    script(src='/js/lib/require.min.js')
+    script(src='/js/main.js')
+    block jscript

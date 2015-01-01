@@ -1,0 +1,41 @@
+@import "./displayer.less";
+
+@media screen and (max-width: 36em) {
+    .main-body {
+        padding: 0;
+        margin: 0;
+        text-align: center;
+    }
+    #top-tools {
+        width: 100% !important;
+    }
+    #top-tools {
+        width: 100% !important;
+        .view-comments-button {
+            display: none !important;
+        }
+        .comment-button {
+            width: 100% !important;
+        }
+    }
+    #bottom-tools {
+        li {
+            width: calc(~"(100% / 3) - 0.14em") !important;
+            margin: 0 !important;
+        }
+    }
+    #main-text_tbl {
+        height: calc(~"100% - 13.65em") !important;
+    }
+    #edit-display-area {
+        margin: 0 !important;
+        padding: 0;
+        width: 100% !important;
+    }
+    #overall-comments-button {
+        margin-top: 0;
+    }
+    .overall-comments-expanded #main-text_tbl {
+        height: calc(~"100% - 16.3em - @{overall-comments-input-height}") !important;
+    }
+}

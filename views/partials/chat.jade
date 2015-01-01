@@ -1,0 +1,8 @@
+div
+    div.message-container
+        time(ng-repeat-start="message in chat.messages" ng-show="shouldAddTime($index)" class="time-stamp" datetime="{{ message.sentAt }}") {{ message.sentAt | date: "h:mm a, M/d/yy" }} 
+        span(ng-repeat-end class="message" ng-class="{'my-message': Util.RESTequals(message.user, chat.me), 'before-time-stamp': shouldAddTime($index+1)}")
+            span(class="message-text") {{ message.text }}
+    div.send-message-container
+        textarea.text(ng-model="message" focus-on="messageBoxFocus" ng-init="messageBoxFocus=true" msd-elastic)
+        .send-message.button(ng-click="send()") Send

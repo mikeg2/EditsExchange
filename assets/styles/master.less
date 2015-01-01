@@ -1,0 +1,119 @@
+.pf(@prop, @value){
+    -:~`";"+"@{prop}:@{value};-webkit-@{prop}:@{value};-moz-@{prop}:@{value};-o-@{prop}:@{value};-ms-@{prop}:@{value}".replace(/'/g,"")`;
+}
+
+//Colors
+@color-1: #F0CAA8;
+@color-2: #A87B53;
+@color-3: #B7916E;
+@color-4: #381112;
+@color-5: #DDB588;
+@color-6: #B39584;
+
+//Specialized Colors
+@color-nav-selected: #fbc384; //saturate(lighten(@color-base, 15%), 50%);
+@color-off-dark: #a0773e;
+@color-highlight: #ffcf9a;
+@color-error: rgba(204, 0, 0, 1);
+@color-success: rgba(179, 179, 179, 1);
+@background-color: @color-1;
+
+// Fonts: Chaparral Pro Display, Rooney Web, Sanvito Pro Caption
+@body-font: 'Chaparral Pro Display';
+@title-font: 'Rooney Web';
+@header-font: 'Sanvito Pro Caption';
+
+// Borders
+.double-border(@first-width, @first-color, @second-width, @second-color) {
+    outline: @second-width solid @second-color;
+    border: @first-width solid @first-color;
+}
+
+//Breaks
+@break-mid: 1024px;
+@break-sm: 576px;
+
+//Buttons
+@button-border-width: 0.15em;
+@button-font-size: 1.4em;
+@button-padding-top: 0.4em;
+@button-height: 2*@button-padding-top + 1em + 4*@button-border-width;
+@button-full-width: ~"100% - 2*@{button-border-width}";
+
+.button(@background-color) {
+    margin: @button-border-width;
+    padding: @button-padding-top 0.6em;
+    font-size: @button-font-size;
+    transition: background-color 0.3s;
+    display: inline-block;
+    cursor: pointer; 
+    text-align: center;
+    border: @button-border-width solid @background-color;
+    outline: @button-border-width solid black;
+    &.unclickable {
+        opacity: 0.6;
+    }
+}
+
+.light-button {
+    .light-button(@background-color);
+}
+
+.light-button(@background-color) {
+    .button(@background-color);
+    outline-color: @color-4;
+    background-color: @color-6;
+    &:hover:not(.unclickable) {
+        background-color: @color-highlight;
+    }
+}
+
+.dark-button {
+    .dark-button(@background-color);
+}
+
+.dark-button(@background-color) {
+    .button(@background-color);
+    background-color: @color-4;
+    &:hover:not(.unclickable) {
+        background-color: @color-off-dark;
+    }
+}
+
+.mid-button() {
+    .mid-button(@background-color);
+}
+
+.mid-button(@background-color) {
+    .button(@background-color);
+    outline-color: @color-4;
+    background-color: @color-2;
+    &:hover:not(.unclickable) {
+        background-color: @color-highlight;
+    }
+}
+
+//Buttons
+
+// //Colors
+@color-base: #c69c6d;
+@color-darker: #965800;
+@color-lighter: #ffedce;
+@color-off-dark: desaturate(tint(@color-darker, 20%), 10%);
+@color-highlight: saturate(lighten(@color-off-light, 10%), 110%);
+@color-off-light: saturate(lighten(@color-base, 10%), 20%);
+@color-background: @color-lighter;
+@color-off-mid: saturate(tint(@color-darker, 35%), 7%);
+@color-error: rgba(204, 0, 0, 1);
+@color-success: rgba(179, 179, 179, 1);
+
+// //Specialized Colors
+// @color-nav-selected: saturate(lighten(@color-base, 15%), 50%);
+
+// //Breaks
+// @break-mid: 1024px;
+// @break-sm: 576px;
+
+// //Buttons
+
+// /* COLOR SCHEME 2 - Restart */

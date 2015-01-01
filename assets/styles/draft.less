@@ -1,0 +1,34 @@
+@import "./master.less";
+@import "./style.less";
+@import "./genre-colors";
+
+a {
+    outline: none;
+}
+
+#upload-new-button {
+    margin-top: 0.4em;
+}
+
+form.new-draft {
+    padding: 0.5em;
+    .general-button {
+        .mid-button();
+    }
+    textarea#summery-sample {
+        height: 9em;
+    }
+    textarea#copy-and-paste-content {
+        height: 12em;
+    }
+}
+
+#upload-draft-modal {
+
+}
+
+.draft-display-drafts-page:extend(.draft-display all) {
+    .author-info-group {
+        display: none;
+    }
+}

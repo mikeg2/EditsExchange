@@ -1,0 +1,20 @@
+a(href="{{ draftPageUrl }}")
+  article(itemscope itemtype="http://schema.org/CreativeWork")
+    .gloss
+    .background
+      .sample {{ draft.sample }}
+    .panel(class="hide")
+      .panel-title.title {{ draft.title }}
+      a(href="{{ urls.getUrlForUser(draft.author.id) }}" )
+        .author-byline
+          //-.label By 
+          .author-tag
+            img(ng-src="{{ draft.author.profilePicture.url}}")
+            span.username {{ draft.author.username }}
+      .panel-controls
+        a(ng-click="showDraftInfo()")
+          .info-button Info
+        a(href="{{ draftPageUrl }}")
+          .draft-page-button Page
+        a(href="{{ editingUrl || loginUrl }}")
+          .edit-button Start Editing

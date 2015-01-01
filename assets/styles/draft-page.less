@@ -1,0 +1,321 @@
+@import "./master";
+@import "./style";
+
+/* Style stand in*/
+@background-color: @color-1;
+
+#edit-section-title {
+    padding-top: 1.7em;
+}
+
+.page-viewer-adjust-width(@width) {
+    width: @width;
+    .pages {
+        li {
+            width: @width;
+        }
+    }
+}
+
+.page-viewer {
+    display: block;
+    .page-viewer-adjust-width(30em);
+    .display-window {
+        overflow: hidden;
+        width: 100%;
+        position: relative;
+    }
+    .pages {
+        .pf('box-sizing', 'border-box');
+        transition: all 1s;
+        list-style: none;
+        width: 1000000000000000000000000em;
+        height: 1%;
+        overflow: hidden;
+        position: relative;
+        background-color: white;
+        p:not(:first-child) {
+            margin-top: 1em;
+        }
+        li {
+            .content {
+                font-size: 1.1em;
+            }
+            .pf('box-sizing', 'border-box');
+            width: 30em;
+            height: auto;
+            background-color: white;
+            padding: 1em;
+            float: left;
+        }
+    }
+    .controllers {
+        @button-width: 5em;
+        @controller-height: 1.5em;
+        overflow: hidden;
+        height: 1%;
+        .left-button, .right-button {
+            .pf('box-sizing', 'border-box');
+            width: 5em;
+            padding: 0.5em;
+            background-color: @color-2;
+            display: inline-block;
+            float: left;
+            text-align: center;
+            cursor: pointer;
+        }
+        .location {
+            .pf('box-sizing', 'border-box');
+            padding: 0.5em;
+            text-align: center;
+            vertical-align: middle;
+            width: calc(~"100% - 2*@{button-width}");
+            display: inline-block;
+            background-color: @color-6;
+            height: 2.2em;
+            float: left;
+        }
+    }
+}
+
+/* Draft Page Only*/
+
+.page-viewer {
+    .page-viewer-adjust-width(40em);
+    clear: both;
+    margin: 0 auto;
+    margin-top: 5em;
+    border: 0.4em solid fade(@color-3, 34%);
+}
+
+.draft-basics {
+    height: 12em;
+    @color-outer-rim: @color-2;
+    .title {
+        .pf('box-sizing', 'border-box');
+        font-size: 1.6em;
+        font-family: @title-font;
+        width: 100%;
+        padding: 0.3em;
+        background-color: @color-outer-rim;
+        position: relative;
+        &::after {
+            content: "";
+            position: absolute;
+            bottom: 2px;
+            left: 0;
+            height: 1px;
+            width: 100%;
+            background: linear-gradient(to right, @color-1 0%, fade(@color-1, 10%) 60%);
+        }
+    }
+    .meta {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        opacity: 0.7;
+        font-style: italic;
+        li {
+            &:not(:last-child)::after {
+                content: '-';
+                margin: 0 0.75em;
+            }
+            float: left;
+        }
+    }
+    .user-identifier {
+        width: @pic-width;
+        outline: 0.1em solid @background-color;
+        border: 0.15em solid @color-outer-rim;
+        position: absolute;
+        bottom: @identifier-padding;
+    }
+    @pic-width: 5em;
+    @identifier-padding: 1.5em;
+    .user-identifier-container {
+        position: relative;
+        float: right;
+        height: calc(~"100% - 2*@{identifier-padding}"); // why doesn't this one work?
+        background-color: @color-2;
+        width: @pic-width;
+        padding: @identifier-padding;
+        display: inline-block;
+    }
+    .description-block {
+        .pf('box-sizing', 'border-box');
+        padding: 1em;
+        position: relative;
+        @description-margin: 0.5em;
+        background-color: @color-3;
+        .pf('box-sizing', 'border-box');
+        margin-right: @description-margin;
+        margin-top: @description-margin;
+        height: calc(~"100% - @{description-margin}");
+        width: calc(~"100% - @{pic-width} - 2*@{identifier-padding} - @{description-margin}");
+        display: inline-block;
+        .meta {
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            height: 1.5em;
+        }
+    }
+}
+
+.edits-section {
+    clear: both;
+}
+
+.edits-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    > li {
+        padding-top: 2em;  // acts as margin
+        clear: both;
+        @user-identifier-width: 4em;
+        @body-identifier-padding: 1em;
+
+        .user-identifier {
+            .boxed-user-identifier();
+            width: @user-identifier-width;
+            margin-right: @body-identifier-padding;
+        }
+
+        .edit-item-body {
+            width: calc(~"100% - 0.1em - @{user-identifier-width} - @{body-identifier-padding}");
+            float: left;
+            .pf('box-sizing', 'border-box');
+        }
+
+         .overall-comments-wrapper {
+            background-color: fade(@color-2, 50%);
+            padding: 1em;
+            border: 0.1em @background-color solid;
+            outline: 0.1em @color-4 solid;
+            .pf('box-shadow', '0px 1px 1px 0px rgba(0, 0, 0, 0.75)');
+            float: left;
+            z-index: 100;
+            width: 100%;
+            .pf('box-sizing', 'border-box');
+            .no-overall-comments {
+                font-style: italic;
+                opacity: 0.9;
+            }
+         }
+
+         .edit-summery-wrapper {
+            h2 {
+                opacity: 0.5;
+                font-size: 0.9em;
+                margin-bottom: 0.5em;
+                font-style: italic;
+            }
+            z-index: -100;
+            margin-top: 0.1em;
+            background-color: @color-3;
+            padding: 1em;
+            clear: both;
+            width: 100%;
+            margin: 0 auto;
+            .pf('box-sizing', 'border-box');
+            .edit-element {
+                &::after, &:first-child::before {
+                    content:'...';
+                    text-decoration: none;
+                }
+            }
+         }
+
+         .edit-options {
+            width: 100%;
+            float: left;
+            list-style: none;
+            li {
+                &:hover {
+                    background-color: @color-highlight;
+                }
+                text-align: center;
+                transition: all 0.3s;
+                font-family: @title-font;
+                font-family: @title-font;
+                cursor: pointer;
+                font-size: 1.1em;
+                .pf('box-sizing', 'border-box');
+                float: left;
+                background-color: @color-3;
+                border: 0.01em dashed @background-color;
+                border-left: none;
+                border-bottom: none;
+                padding: 0.3em;
+                width: calc(~"100% / 3");
+                &:last-child {
+                    border-right: none;
+                }
+            }
+         }
+    }
+}
+
+.edit-modal:extend(.basic-modal all) {
+    &.shown .modal-body {
+        height: 85vh;
+        top: 5%;
+        bottom: 5%;
+        header {
+            display: block;
+            font-size: 0.6em;
+            background-color: transparent;
+            transition: all 0.3s;
+            opacity: 0.2;
+            &:hover {
+                opacity: 0.9;
+            }
+            .hide-button {
+                background-color: @color-3;
+            }
+        }
+        .modal-content {
+            height: 100%;
+            padding-right: 0.3em;
+            background-color: white;
+            background-origin: content-box;
+        }
+    }
+    .overall-comments-wrapper {
+        border-bottom: 0.1em dashed gray;
+        margin-bottom: 1.5em;
+    }
+}
+
+.options {
+    padding: 0;
+    width: @width;
+    @width: 40em;
+    margin: 1em auto;
+    @li-number: 3;
+    li {
+        width: 100%;
+        .mid-button();
+        font-size: 0.95em;
+        .pf('box-sizing', 'border-box');
+    }
+    > a, > li {
+        float: left;
+        width: calc(~"100% / @{li-number} - (1/0.5)*(0.5em)*2/3");
+        margin-right: 0.5em;
+        &:last-child {
+            margin-right: 0em;
+        }
+    }
+}
+
+.no-edits {
+    margin: 1.1em 0.8em;
+    color: @color-4;
+    font-style: italic;
+    font-size: 1.2em;
+}
+
+
+@import "./edit-content-styles";

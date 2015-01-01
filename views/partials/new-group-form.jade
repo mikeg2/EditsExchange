@@ -1,0 +1,31 @@
+div
+    form.new-draft(name="newGroupForm" novalidate)
+        .form-section#meta-section
+            .form-group
+                label(for="name") Name
+                input(type="textfield" name="name" ng-model="newGroup.name" required)
+                span(class="error-message" ng-show="newGroupForm.name.$invalid && (!newGroupForm.name.$pristine || attemptSubmit)") A name is required
+            .form-group()
+                label(for="tags") Tags
+                span.input-note Comma separated list
+                input(type="textfield" name="tags" ng-model="newGroup.tags" required)
+                span(class="error-message" ng-show="newGroupForm.tags.$invalid && (!newGroupForm.tags.$pristine || attemptSubmit)") Tags are required
+            .form-group
+                label(for="description") Description
+                span.input-note What is this group for?
+                textarea#summery-description(ng-model="newGroup.description" type="textfield" name="description" required)
+                span(class="error-message" ng-show="newGroupForm.description.$invalid && (!newGroupForm.description.$pristine || attemptSubmit)") A description is required
+        .form-group
+                label(for="type") Type
+                select(ng-model="newGroup.type" ng-options="type for type in GROUP_TYPES")
+                div.input-note Anyone can join a "Public" group, users can request your permission to join a "Private" group, but no one can even see a "Secret" group unless you invite them
+                div(class="error-message" ng-show="newGroupForm.type.$invalid && (!newGroupForm.type.$pristine || attemptSubmit)") A genre is required
+        .form-section
+            .form-group
+                label(for="users") Invite Users
+                user-input(ng-model="users")
+            //- .form-group
+            //-     label(for="emails") Invite Friends via Emails
+            //-     tags-input(display-property="emails" place-holder="Type in emails" ng-model="emails")
+        .form-section
+            div.general-button.modal-button(ng-click="submit()") Create New Group

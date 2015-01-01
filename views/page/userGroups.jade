@@ -1,0 +1,22 @@
+extends ../skeleton
+block content
+  span.general-button#create-new-button(ng-click="modal.newGroupModal = true") Create New Group
+  ul.group-list
+    li(ng-repeat="group in user.groups" group-item="group" me="user")
+    .display-message(style="text-align: left" ng-show="user.groups.length == 0")
+      | Join a writing group by going under the "Groups" tag of EditsExchange or create your own
+  modal.create-new-group-modal.basic-modal(show="modal.newGroupModal" title="'Create New Group'")
+    new-group()
+
+
+block css
+  link(rel='stylesheet', href='/styles/my-groups.css')
+
+block jscript
+  script(src="/js/ang/app/user/myGroups/myGroupsApp.js")
+
+block vars
+  - var page = "My Groups"
+  - var custom = true
+  - var app_name = "myGroupsApp"
+  - var main_controller = "mainController"

@@ -1,0 +1,12 @@
+doctype html
+html(lang='en')
+  head
+    link(rel='stylesheet', href='/styles/style-lg.css')
+    //- link(rel='stylesheet', href='/js/angular/login/animate.css')
+    title "Log In"
+  body(class="log-in-body")
+    div(ng-view ng-animate="{event: 'login-animate-enter'}" ng-init="from='#{from}'")
+    // Javascript
+    script(src='/js/lib/require.min.js')
+    script(src='/js/main.js')
+    script(src='/js/ang/app/login/loginApp.js')

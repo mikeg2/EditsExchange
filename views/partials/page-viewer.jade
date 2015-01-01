@@ -1,0 +1,9 @@
+div
+    .display-window
+        ol.pages(style="margin-left: calc({{ pageNumber - 1}} * -100%)")
+            li(ng-repeat="page in pages")
+                .content(ng-bind-html="page")
+    .controllers
+        .left-button(ng-click="back()") Back 
+        .location Page {{ pageNumber }} of {{ pages.length }}
+        .right-button(ng-click="next()") Next

@@ -1,0 +1,66 @@
+extends ../skeleton
+block content
+    ol.page-location
+        li.page Groups
+        li.page {{ group.name }}
+    section.basic-info.group-page-section
+      .group-logo
+        img.group-picture(ng-src="{{ group.groupPicture.url }}")
+        .group-name {{ group.name }}
+      .about-group
+        {{ group.description }}
+      ul.group-meta
+    section.joining
+      .join.group-page-section(ng-controller="membersController")
+        .join-button(ng-show="!group.isMember" ng-click="join()") Join
+        .join-button(ng-show="group.isMember" ng-click="leave()") Leave
+      .invite.group-page-section(ng-controller="inviteController")
+        .invite-button(ng-click="modal.inviteModal = true") Invite
+    section.drafts.draft-scroll.group-page-section(ng-controller="infiniScrollController" ng-if="group.isMember")
+      h2 Recent Posts
+      step-scroll.step-scroll.content(load-next="group.loadNextDrafts(numItems)")
+        li(ng-repeat="draft in group.drafts" draft-item ng-click="showDraft(draft)" draft="draft" class="draft-item")
+    section.discussions.group-page-section
+      h2 Discussions
+      .content
+        ul
+          li(ng-repeat="discussion in group.discussions | orderBy: '-createdAt'" ng-click="modal.discussionToShow = discussion")
+            span.topic {{ discussion.topic }}
+            span.last-post 
+        .new-discussion-button(ng-click="modal.showNewDiscussion = true") New Discussion
+    section.members.group-page-section(ng-controller="membersController")
+      h2 Members
+      ul.content.user-icon-list
+        li.user-item(ng-repeat="member in group.members" user-item="member")
+    section.activity.group-page-section
+      h2 Activity
+      ul.content
+        li(ng-repeat="act in group.activity | orderBy:'at'")
+          span.what {{ act.what }} 
+          span.at at {{ act.at | date:"h:mm a, M/d/yy"}}
+    // auxillary
+    modal.draft-display-modal(class="basic-modal" show="modal.showDraftModal" title="modal.draftToShow.title")
+      draft-display(draft="modal.draftToShow" user="user" class="draft-display")
+    modal.new-discussion-modal.basic-modal(show="modal.showNewDiscussion" title="'New Discussion'")
+      new-discussion.new-discussion(ng-if="group.isMember" group="group" me="user" on-submit="modal.showNewDiscussion = false" on-created="group.discussions.unshift($newGroup)")
+      span.modal-restricted-message(ng-if="!group.isMember") You have to join {{ group.name }} before you can start a discussion
+    modal.discussion-display-modal(show="modal.discussionToShow" title="modal.discussionToShow.topic | cut:false:30")
+      discussion-display.discussion(discussion-id="modal.discussionToShow.id" me="user" ng-if="group.isMember")
+      span.modal-restricted-message(ng-if="!group.isMember") Join {{ group.name }} to see their discussions
+    modal.inviter-display-modal.basic-modal(show="modal.inviteModal" title="'Invite Fellow Writers'")
+      div(ng-controller="groupInviterController" ng-if="group.isMember")
+        inviter.invite-friends(restangular="groupInviteObject" on-submit="modal.inviteModal = false")
+      span.modal-restricted-message(ng-if="!group.isMember") You have to join {{ group.name }} yourself before you can invite other writers
+
+block css
+  link(rel='stylesheet', href='/styles/group-page.css')
+
+block jscript
+  script(src="/js/ang/app/group/groupPage/groupPageApp.js")
+
+block vars
+  - var page = "Group Page"
+  - var custom = true
+  - var app_name = "groupPageApp"
+  - var main_controller = "mainController"
+  - var main_init = "groupId = '" + groupId + "'"

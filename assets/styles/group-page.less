@@ -1,0 +1,198 @@
+@import "./master.less";
+@import "./genre-colors";
+@import "./style";
+
+.modal-restricted-message {
+    margin-top: 2em;
+    padding: 1em;
+    background-color: fadeOut(@color-error, 50);
+    display: block;
+    text-align: center;
+}
+
+section.drafts {
+    width: 100%;
+    margin-bottom: @box-margin;
+    overflow: hidden;
+}
+
+section.joining {
+    .join, .invite {
+        .pf('box-sizing', 'border-box');        
+        padding: 2em;
+        float: left;
+        width: calc(~"50% - @{box-margin}/2")
+    }
+    .invite-button, .join-button {
+        .light-button();
+        min-width: 60%;
+        margin: 0 auto;
+        display: table;
+    }
+    .join {
+        margin-right: @box-margin;
+    }
+}
+
+section.basic-info {
+    width: 100%;
+    margin-bottom: 2em;
+}
+
+@section-box-header-height: @box-header-height-no-border + @box-bottom-border-width;
+@section-header-font-size: 1.5em;
+.group-page-section {
+    h2 {
+        font-size: @section-header-font-size;
+        .box-header();
+        height: @section-box-header-height;
+        border-bottom-width: @box-bottom-border-width;
+    }
+    .content {
+        .box-body();
+    }
+}
+
+section.basic-info {
+    @border-width: 0.11em;
+    border: @border-width solid @color-1;
+    @outline-width: 0.12em;
+    outline: @outline-width solid @color-2;
+    margin: @outline-width - @border-width;
+    width: calc(~"100% - 2*@{outline-width}");
+    background-color: @color-2;
+    .group-logo {
+        @group-logo-padding: 0.5em;
+        padding: @group-logo-padding;
+        width: calc(~"100% - 2*@{group-logo-padding}");
+        @group-logo-height: 5em;
+        clear: both;
+        height: @group-logo-height;
+        border-bottom: 0.2em solid @color-4;
+        img {
+            height: @group-logo-height;
+            float: left;
+        }
+        .group-name {
+            @font-size: @group-logo-height - 1em;
+            height: @group-logo-height / @font-size;
+            float: left;
+            margin-left: 0.3em;
+            font-size: @font-size;
+            margin-top: (@group-logo-height - @font-size)/(2*@font-size);
+            font-weight: bold;
+            font-family: @header-font;
+        }
+    }
+    .about-group {
+        @padding: 0.7em;
+        padding: @padding;
+        width: calc(~"100% - 2*@{padding}");
+        background-color: @color-5;
+    }
+}
+
+section.drafts {
+    .pf('box-sizing', 'border-box');
+}
+
+@box-margin: 1.5em;
+@third-row-columns: 2;
+@box-height: 25em;
+
+section.activity, section.members, section.discussions {
+    .pf('box-sizing', 'border-box');
+    height: @box-height;
+    display: inline-block;
+    float: left;
+    width: calc(~"50% - @{box-margin} / 2");
+    .content {
+        .pf('box-sizing', 'border-box');
+        height: @box-height - @section-box-header-height*@section-header-font-size;
+    }
+    ul {
+        .pf('box-sizing', 'border-box');
+        margin: 0;
+        overflow-y: auto;
+        list-style: none;
+        padding: 1em;
+        li {
+            margin-bottom: 1em;
+            padding: 0.5em;
+            .at {
+                font-style: italic;
+            }
+        }
+    }
+}
+
+section.discussions {
+    height: 2*@box-height + @box-margin;
+    margin-right: @box-margin;
+    @discussions-content-height: 2*@box-height + @box-margin - @section-box-header-height*@section-header-font-size;
+    .content {
+        height: @discussions-content-height;
+    }
+    @new-discussion-button-space: @button-height + 2*@new-discussion-button-margin;
+    @new-discussion-button-margin: 0.5em;
+    .new-discussion-button {
+        .mid-button(@color-5);
+        .pf('box-sizing', 'border-box');
+        width: calc(~"100% - 2*@{button-border-width} - 2em");
+        margin: @new-discussion-button-margin auto;
+        display: table;
+    }
+    ul {
+        .pf('box-sizing', 'border-box');
+        height: @discussions-content-height - @button-font-size*@new-discussion-button-space;
+        padding: 0.7em;
+        li {
+            background-color:@color-3;
+            border: 0.1em solid @color-5;
+            outline: 0.11em solid @color-2;
+            font-size: 1.1em;
+            padding: 0.5em;
+            margin-bottom: 0.5em;
+            cursor: pointer;
+
+        }
+    }
+}
+
+section.members {
+    padding-right: 0; // compensate for padding to the right of each li
+    ul {
+
+    }
+}
+
+section.drafts {
+    .pf('box-sizing', 'border-box');
+    clear: both;
+    width: calc(~"100%");
+}
+
+section.activity {
+    margin-top: @box-margin;
+    ul > li {
+        background-color: @color-3;
+    }
+}
+
+.new-discussion {
+    #description {
+        height: 10em;
+    }
+    .new-discussion-button {
+        .pf('box-sizing', 'border-box');
+        .light-button();
+        width: calc(~"100% - 2*@{button-border-width}")
+    }
+    textarea {
+        min-height: 6em;
+    }
+}
+
+#invite-friends-submit {
+    .light-button();
+}

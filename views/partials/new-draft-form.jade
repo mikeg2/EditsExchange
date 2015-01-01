@@ -1,0 +1,49 @@
+div(ng-controller="newDraftController")
+    form.new-draft(name="newDraft" ng-controller="newDraftFormController" novalidate ng-if="page.name == 'new-draft' || !page.name")
+        .form-section#meta-section
+            .form-group
+                label(for="title") Title
+                input(type="textfield" name="title" ng-model="title" required)
+                span(class="error-message" ng-show="newDraft.title.$invalid && (!newDraft.title.$pristine || newDraft.wasSubmit)") A title is required
+            .form-group()
+                label(for="tags") Tags
+                span.input-note Comma separated list
+                input(type="textfield" name="tags" ng-model="tags" required)
+                span(class="error-message" ng-show="newDraft.tags.$invalid && (!newDraft.tags.$pristine || newDraft.wasSubmit)") Tags are required
+            .form-group
+                label(for="genre") Genre
+                span.input-note The first genre pick will determine the draft's color
+                infinite-choice(name="genre" ng-model="genres" options="genreOptions" value-property="id" display-property="name" required)
+                div(class="error-message" ng-show="newDraft.genre.$invalid && (!newDraft.genre.$pristine || newDraft.wasSubmit)") A genre is required
+            .form-group(ng-init="sample=''")
+                label(for="title") Sample
+                span.input-note Pick a short, powerfull sample of your piece
+                textarea#summery-sample(ng-model="sample" type="textfield" name="sample" required) {{ content }}
+                span(class="error-message" ng-show="newDraft.sample.$invalid && (!newDraft.sample.$pristine || newDraft.wasSubmit)") A sample is required
+        .form-section#content-section
+            .form-group
+                label(for="contentType") Upload Format
+                span.toggle-group(ng-init="form_state.content_type = 'c&p'" name="contentType")
+                    span.toggle-item(ng-class="{selected: form_state.content_type == 'c&p' }", ng-click="form_state.content_type = 'c&p'") Copy &amp; Paste
+                    span.toggle-item(ng-class="{selected: form_state.content_type == 'file' }", ng-click="form_state.content_type = 'file'") File
+            .form-group
+                label(for="content") Upload
+                div#copy-and-paste-area(ng-show="form_state.content_type == 'c&p'")
+                    textarea#copy-and-paste-content(smart-paste name="content" ng-model="content" required)
+                    div.input-note Copy and paste from Word, Google Docs, etc.
+                span#upload-file-area(ng-show="form_state.content_type == 'file'")
+                    upload-to-text(to="content"  uploaded="form_state.content_type = 'c&p';")
+                    div.input-note Make sure the .docx file ONLY includes the story, not the title 
+            span(class="error-message" ng-show="(content.length == 0 || content == undefined) && newDraft.wasSubmit") The content of the story is required
+        .form-section#group-section
+            .form-group
+                label(for="groups") Groups
+                div.input-note(ng-show="user.groups.length > 0")
+                infinite-choice(name="groups" ng-model="groups" options="user.groups" value-property="id" display-property="name") 
+        .form-section
+            .general-button.modal-button(ng-click="submit(); newDraft.wasSubmit = true;" ) Submit For Editing
+            div.input-note Your draft will appear immediately on the website, where other authors and editors can review it.
+    div(ng-controller="inviteFriendsController" ng-if="page.name == 'invite-friends'")
+        inviter.invite-friends(restangular="draftInviteObject" on-submit="modal.uploadDraftModal = false")
+        div.input-note
+            | Invite friends to edit your draft using their username or email

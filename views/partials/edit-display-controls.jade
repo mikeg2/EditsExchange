@@ -1,0 +1,15 @@
+div
+      .tool-box-control-group
+        span#font-size-control-label.tool-box-control-label Font Size:
+        span#increase-font-size-button.tool-box-button.icon-tool-box-button(ng-click="incrementFontSizePositive()") +
+        span#decrease-font-size-button.tool-box-button.icon-tool-box-button(ng-click="incrementFontSizeNegative()") -
+      .tool-box-control-group
+        span#font-family-control-label.tool-box-control-label Font Family:
+        span.tool-box-font-sample#georgia(ng-click="settings.fontFamily = 'georgia'" ng-class='{selected: settings.fontFamily == "georgia"}') abc
+        span.tool-box-font-sample#time-new-roman(ng-click="settings.fontFamily ='times-new-roman'" ng-class='{selected: settings.fontFamily == "times-new-roman"}') abc
+        span.tool-box-font-sample#arial(ng-click="settings.fontFamily = 'arial'" ng-class='{selected: settings.fontFamily == "arial"}') abc
+      .tool-box-control-group
+        span#contrast-control-label.tool-box-control-label Contrast:
+        span.tool-box-button.icon-tool-box-button#B(ng-click="settings.colorMode = 'B'", ng-class='{selected: settings.colorMode == "B"}') B
+        span.tool-box-button.icon-tool-box-button#W(ng-click="settings.colorMode = 'W'", ng-class='{selected: settings.colorMode == "W"}') W
+        span.tool-box-button.icon-tool-box-button#S(ng-click="settings.colorMode = 'S'" ng-class='{selected: settings.colorMode == "S"}') S

@@ -1,0 +1,43 @@
+head
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+
+div(style="\
+        background-color: #c69c6d;\
+        font-family: 'courier-new';\
+        width: calc(100% - 2 * 0.5em);\
+        padding: 0.5em;")
+    div#title(style="\
+            margin-bottom: 0.3em;\
+        ")
+        a(href="/" style="\
+                font-size: 2em;\
+                color: black;\
+                font-weight: bold;\
+                opacity: 0.7;\
+                display:inline\
+            ")
+                span
+                    | #{editor.username} 
+                span(style="opacity: 0.5; font-size: 0.8em; font-family: 'Times New Roman'")
+                    | started editing 
+                span(style="text-decoration: underline")
+                    | #{draft.title} 
+    .button(style="\
+            width: 100%;\
+            max-width: 7em;\
+            padding: 0.7em;\
+            font-size: 1.5em;\
+            background-color: #A0773E;\
+            text-align: center;\
+            cursor: pointer;\
+            color: black;\
+        ")
+        a(href="editsexchange.com/user/messages" style="\
+                font-size: inherit;\
+                outline: none\
+                font-family: inherit;\
+                font: inherit;\
+                color: inherit;\
+                text-decoration: none;\
+                font-weight: inherit;\
+            ") View Edits Live

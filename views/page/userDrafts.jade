@@ -1,0 +1,34 @@
+extends ../skeleton
+block content
+    .central-search-box
+        label.label-major.text-field-label(for='search')
+          | Search Your Drafts:
+        input(type="textfield" ng-model="search_term" focus-on="searchBoxFocus" ng-init="searchBoxFocus=true")
+    span.general-button#upload-new-button(ng-click="modal.uploadDraftModal = true") Upload New Draft
+    ul.draft-list(ng-controller="draftListAreaController" )
+        li(draft-item ng-click="showDraft(draft)" ng-repeat="draft in (displayDrafts = (user.drafts | orderBy:'publicationDate':true | fuzzy:search_term:['title']:0.3))" draft="draft" class="draft-item")
+        .display-message(ng-show="(searchToLong = search_term.length > 32)") Search query too long! Try something shorter.
+        .display-message(ng-show="displayDrafts.length == 0 && user.drafts.length > 0 && !searchToLong") No Results
+        .display-message(style="text-align: left" ng-show="user.drafts.length == 0")
+          | Your drafts will appear here once you upload them. 
+          br
+          br
+          | To upload a new draft, click the "Upload New Draft" button above.
+          | After you hit submit, your draft will be published to the rest of the site.
+          | When someone decides to edit your draft, you'll get an email.
+    modal.modal-target#upload-draft-modal(class="basic-modal" show="modal.uploadDraftModal" title="'New Draft'")
+      ng-include(src="'/partials/new-draft-form'")
+    modal.draft-display-modal(class="basic-modal" show="modal.showDraftModal" title="modal.draftToShow.title")
+      draft-display(draft="modal.draftToShow" user="user" class="draft-display-drafts-page")
+
+block css
+  link(rel='stylesheet', href='/styles/draft.css')
+
+block jscript
+  script(src="/js/ang/app/user/drafts/draftsApp.js")
+
+
+block vars
+  - var page = "Drafts"
+  - var custom = true
+  - var app_name = "draftsApp"

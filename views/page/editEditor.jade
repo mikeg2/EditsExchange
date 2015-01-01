@@ -1,0 +1,79 @@
+extends ../skeleton
+block total-content
+  .main-body(ng-controller="editEditorController" ng-init="popups = {}; draftID='#{draftID}'; draftEditorID='#{draftEditorID}'; draftOwnerID='#{draftOwnerID}' ")
+    div#top-tools
+      span.comment-button(ng-click="newComment()") Add Comment
+      span.view-comments-button#popup-view-comments-button(ng-init="popups.showCommentPopup = false" ng-click="popups.showCommentPopup = true;" stop-event='click') View Comments
+      div.comment-list-container.popup(popup-box show="popups.showCommentPopup" anchor="#popup-view-comments-button" direction="top")
+        comment-displayer.comment-list(edit="edit" comment-editor="commentEditor")
+    ul#left-tool-list.side-tool-list.tool-list()
+      li#comments-tool-box
+        span.tool-box-title Comments
+        span.tool-box-control-area
+          #tool-box-controls
+            span.comment-button.tool-box-button(ng-click="newComment()" title="") Add Comment
+          div.comment-list-container
+            comment-displayer.comment-list(edit="edit" comment-editor="commentEditor")
+    ul#right-tool-list.side-tool-list.tool-list
+      li#about
+        span#title {{ draft.title }}
+        span#by By 
+          a(href="{{ getUrlForUser(draft.author.id) }}" target="_blank") {{ draft.author.username }}
+      li
+        span.tool-box-title#display-box-title(ng-init="popups.showDisplayPopup = false" ng-click="popups.showDisplayPopup = true;" stop-event='click') Display
+        .tool-box-control-area#display-control-area(popup-box show="popups.showDisplayPopup" anchor="#display-box-title" direction="bottom")
+          display-controls(settings="editorSettings")
+      li#message-tool-box
+        span.tool-box-title(ng-click="modal.showMyChatWithUser = true") Messages
+        span.tool-box-control-area
+          .tool-box-button(ng-click="modal.showMyChatWithUser = true") View Messages
+      li#progress-tool-box
+        span.tool-box-title Progress
+        .tool-box-control-area
+          span.progress-update#saved-progress-update(ng-show="save_state == 'saved'") Saved
+          span.progress-update#saving-progress-update(ng-show=" save_state == 'saving'") Saving...
+          span.progress-update#error-progress-update(ng-show="save_state == 'error'") Error!
+    #edit-display-area(ng-class="{'overall-comments-expanded': showOverallComments}")
+      textarea.document-display#main-text(editor ng-model="edit.content" font-size="editorSettings.fontSize" font-family="editorSettings.fontFamily" color-mode="editorSettings.colorMode" active-comment = "commentEditor.activeComment" new-comment="addComment()") {{ edit.content }}
+      .overall-comments
+        #overall-comments-button(ng-click="showOverallComments = !showOverallComments") Overall Comments
+        textarea.overall-comments-input(ng-model="edit.overallComments" ng-class="{collapsed: !showOverallComments}" placeholder="What did you think overall?")
+    ul#bottom-tools
+      li.display-button Display
+      li.message-button Messages
+      li.progress
+        // need to make a directive...
+    comment-box.commentBox(comment="commentEditor.activeComment" on-delete="deleteComment(commentEditor.activeComment)" location="commentEditor.activeComment.location || origin" show="commentEditor.commentBox.show")
+    modal.chat-modal(show="modal.showMyChatWithUser" title="'Chat with ' + draft.author.username" thumbnail="draft.author.profilePicture.url" )
+      chat-display(me="user" with-users="draft.author" activate="modal.showMyChatWithUser" class="chat")
+
+block jscript
+  //- script(src='/js/angular/editDisplayers/editDisplayers.js')
+  //- script(src="/js/angular/directives/draftDisplay.js")
+  //- script(src="/js/angular/directives/modal.js")
+  //- script(src='/js/angular/editDisplayers/commentLikeService.js')
+  //- script(src='/js/angular/editDisplayers/commentDisplayer.js')
+  //- script(src='/js/angular/editDisplayers/displayControls.js')
+  //- script(src='/js/angular/editDisplayers/displayerController.js')
+  //- script(src='/js/angular/editDisplayers/DOMManipulator.js')
+  //- script(src='/js/angular/editDisplayers/commentBox.js')
+  //- script(src='/js/angular/editDisplayers/editor.js')
+  //- script(src="http://code.angularjs.org/1.0.0rc10/angular-cookies-1.0.0rc10.js")
+  script(src='/js/ang/app/editDisplayers/editEditor/editEditorApp.js')
+  //- script(src='/js/angular/editDisplayers/editEditor/autoSave.js')
+  //- script(src='/js/ice_tinymce/ice.js')
+  //- script(src='/js/pxem.JQuery.js')
+  //- //script(src='/styles/js/window-height.js')
+  //- script(src='/js/ice_tinymce/tinymce/jscripts/tiny_mce/tiny_mce.js')
+  //- script(src='/js/jquery.browser.min.js')
+  //- script(src='/js/angular/general/popupService.js')
+  //- script(src='/js/angular/general/chat.js')
+  //- script(src='/js/angular/directives/popup.js')
+  //- script(src='/js/lib/putCursorAtEnd.min.js')
+
+block css
+  link(rel='stylesheet', href='/styles/displayer.css')
+
+block vars
+  - var page = "Editing Page"
+  - var custom = true

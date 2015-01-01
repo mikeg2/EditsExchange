@@ -1,0 +1,26 @@
+extends ../skeleton
+block content
+  ul.chat-list(ng-controller="chatListController")
+    .new-chat-button(ng-click="modal.showNewChat = true") New Chat
+    li(ng-repeat="chat in user.chats" ng-click="chatDisplay.selectedChat = chat" ng-class="{selected: chatDisplay.selectedChat == chat}")
+      img.thumbnail(src="{{ chat.display.thumbnail }}")
+      span.username {{ chat.display.name | cut:false:10 }}
+  .chat-display-container(ng-class="{active: chatDisplay.selectedChat}")
+    ng-switch(on="chatDisplay.selectedChat !== undefined")
+      chat-display.chat(ng-switch-when="true" chat-id="chatDisplay.selectedChat.id" me="user")
+      span.chat-display-message(ng-switch-when="false") No chat selected
+  modal.new-chat-modal.dialog.new-chat(show="modal.showNewChat" title="'New Chat'")
+    div(ng-controller="newChatController")
+      user-input(ng-model="selectedUsers")
+      .create-button(ng-click="startChat()") Start Chat
+
+
+block css
+  link(rel='stylesheet', href='/styles/messages.css')
+
+block jscript
+  script(src="/js/ang/app/user/messages/messagesApp.js")
+
+block vars
+  - var page = "Messages"
+  - var custom = true

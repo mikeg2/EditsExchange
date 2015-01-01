@@ -1,0 +1,72 @@
+extends ../skeleton
+block total-content
+  .main-body(ng-controller="editViewerController" ng-init="popups = {}; editID='#{editID}';")
+    ul#left-tool-list.side-tool-list.tool-list()
+      li#comments-tool-box
+        span.tool-box-title Comments
+        span.tool-box-control-area
+          #tool-box-controls
+            span#view-comments-button.tool-box-button(ng-init="popups.showCommentPopup = false" ng-click="popups.showCommentPopup = true;" stop-event='click') View Comments
+          div#comment-list-container(popup-box show="popups.showCommentPopup" anchor="#view-comments-button" direction="top")
+            comment-displayer#comment-list(edit="edit")
+
+    ul#right-tool-list.side-tool-list.tool-list
+      li
+        span.tool-box-title#display-box-title(ng-init="popups.showDisplayPopup = false" ng-click="popups.showDisplayPopup = true;" stop-event='click') Display
+        .tool-box-control-area#display-control-area(popup-box show="popups.showDisplayPopup" anchor="#display-box-title" direction="bottom")
+          display-controls(settings="editorSettings")
+      li#message-tool-box
+        span.tool-box-title(ng-click="modal.showMyChatWithUser = true") Messages
+        span.tool-box-control-area
+          .tool-box-button(ng-click="modal.showMyChatWithUser = true") View Messages
+      li
+        span.tool-box-title#about-edit-title(ng-init="popups.showAboutPopup = false" ng-click="popups.showAboutPopup = true;" stop-event='click') About Edit
+        span.tool-box-control-area(popup-box show="popups.showAboutPopup" anchor="#about-edit-title" direction="bottom")
+          .tool-box-control-group
+            span.tool-box-control-label Editor:
+            span.tool-box-control-info
+              a(ng-href="{{ getURLForUserPage(edit.editor) }}")
+          .tool-box-button Draft
+    #edit-display-area()
+      textarea.document-display#main-text(editor ng-model="edit.content" read-only font-size="editorSettings.fontSize" font-family="editorSettings.fontFamily" color-mode="editorSettings.colorMode" active-comment = "commentEditor.activeComment") {{ edit.content }}
+      #overall-comments(ng-click="modal.showOverallComments = true") Overall Comments
+    comment-box.commentBox(comment="commentEditor.activeComment"  read-only on-delete="deleteComment(commentEditor.activeComment)" location="commentEditor.activeComment.location || origin" show="commentEditor.commentBox.show")
+    modal#overall-comments-modal(show="modal.showOverallComments" title="'Overall Comments'")
+      span {{ edit.overallComments }}
+    modal.chat-modal(show="modal.showMyChatWithUser" title="'Chat with ' + edit.editor.username" thumbnail="edit.editor.profilePicture.url" )
+      chat-display(me="user" with-users="edit.editor" activate="modal.showMyChatWithUser" class="chat")
+
+block jscript
+  //script(src='//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js')
+  script(src="/js/angular/directives/draftDisplay.js")
+  script(src="/js/angular/directives/modal.js")
+  script(src='/js/angular/socketSetup.js')
+  script(src='/js/angular/editDisplayers/editDisplayers.js')
+  script(src='/js/angular/editDisplayers/commentLikeService.js')
+  script(src='/js/angular/editDisplayers/commentDisplayer.js')
+  script(src='/js/angular/editDisplayers/displayControls.js')
+  script(src='/js/angular/editDisplayers/displayerController.js')
+  script(src='/js/angular/editDisplayers/DOMManipulator.js')
+  script(src='/js/angular/editDisplayers/commentBox.js')
+  script(src='/js/angular/editDisplayers/editor.js')
+  script(src="http://code.angularjs.org/1.0.0rc10/angular-cookies-1.0.0rc10.js")
+  script(src='/js/angular/editDisplayers/editViewer/editViewerApp.js')
+  script(src='/js/angular/editDisplayers/editViewer/editAutoUpdater.js')
+  script(src='/js/pxem.JQuery.js')
+  script(src='/js/ice_tinymce/tinymce/jscripts/tiny_mce/tiny_mce.js')
+  script(src='/js/jquery.browser.min.js')
+  script(src='/js/angular/general/popupService.js')
+  script(src='/js/angular/general/chat.js')
+  script(src='/js/angular/directives/popup.js')
+  script(src='/js/lib/putCursorAtEnd.min.js')
+
+block css
+  link(rel='stylesheet', href='/styles/displayer.css')
+  link(rel='stylesheet', href='/styles/displayer-mid.css')
+  link(rel='stylesheet', href='/styles/displayer-sm.css')
+  link(rel='stylesheet', href='/styles/displayer-viewer-supplement.css')
+
+block vars
+  - var page = "Edit Viewer"
+  - var custom = true
+  - var app_name = "editViewerApp"

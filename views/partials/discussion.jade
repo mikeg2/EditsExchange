@@ -1,0 +1,13 @@
+div
+    div.description
+        {{ discussion.topic }}
+    div.message-container
+        div(ng-repeat="message in discussion.messages" class="message")
+            div.message-sender
+                span(class="username") {{ message.user.username }}
+                img(class="picture" src="{{ message.user.profilePicture.url }}")
+            span(class="message-text") {{ message.text }}
+            span(class="message-date") {{ message.sentAt | date: "h:mm a, M/d/yy" }} 
+    div.send-message-container
+        message-writer(ng-model="messageSender.message")
+        .send-message.button(ng-click="send()") Contribute

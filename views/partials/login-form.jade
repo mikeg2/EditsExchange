@@ -1,0 +1,10 @@
+form.log-in-box(method="POST" ng-controller="formController")
+    ul.error-box(ng-show="errors != undefined && errors.length != 0")
+        li(ng-repeat="error in errors") {{ error.msg }}
+    label(for="email", ng-model="user.email") Email
+    input.text-field-login(type="textfield" name="email" ng-model="user.email" required)
+    label(for="password") Password
+    input.text-field-login(type="password" name="password" ng-model="user.password" required)
+    button.log-in-button(ng-click="submit()") Log In
+    a(href="#/new")
+        button.log-in-button(href="#/new" ng-click="submit()") New User?

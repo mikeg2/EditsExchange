@@ -1,0 +1,46 @@
+article(itemscope itemtype="http://schema.org/CreativeWork" ng-class="{'is-users': isUsers}")
+    section.edits-information(ng-show="draft.isUsers")
+        h2 Edits
+        ul.edits-list
+            a(ng-repeat="edit in draft.edits | orderBy : 'lastEdit' : true " target="_blank" ng-href="{{ getURLForEditViewer(edit) }}")
+                li
+                    .info-group.editor-info-group
+                        h3 By
+                        span.editor.inline-link {{ edit.editor.username }}
+                    .info-group.last-edit-date-info-group
+                        h3 at
+                        time.last-edit-date(itemprop="datePublished" datetime="{{ edit.lastEdit }}") {{ edit.lastEdit | date: "h:mm a, M/d/yy"}}
+        div.info-group-message(ng-show="draft.edits.length == 0")
+          | No one has edited your draft (yet)
+    section.button-holder(ng-show="!draft.isUsers")
+         a(href="{{ getURLForEditEditor(draft.id, user.id) }}" target="_blank") 
+            .general-button.modal-button#edit-button Edit
+    section.draft-information
+        h2 Draft Information
+        .info-group.author-info-group
+          h2 Author
+          span.author(itemprop="author")
+            a.inline(href="{{ getURLForUser(draft.author.id) }}" target="_blank") {{ draft.author.username }}
+        .info-group.sample-info-group
+          h2 Sample
+          span.sample(itemprop="sample") {{ draft.sample }}
+        .info-group.title-info-group
+          h2 Title
+          span.title(itemprop="title") {{ draft.title }}
+        .info-group.publication-date-info-group
+          h2 Publication Date
+          time.publication-date(itemprop="datePublished" datetime="{{ draft.publication_date }}") {{ draft.publicationDate | date: "MMMM d, yyyy" }}
+        .info-group.words-info-group
+          h2 Words
+          span.words(itemprop="wordCount") {{ draft.wordCount }}
+        .info-group.genre-info-group
+          h2 Genres
+          span.number-of-edits(itemprop="genre") {{ draft.genres | subArray: "name" | joinBy: ', ' }}
+        .info-group.edits-info-group
+          h2 Number Of Edits
+          span.number-of-edits(itemprop="editCount") {{ draft.edits.length == 0 ? "None" : draft.edits.length }}
+
+    aritcle.draft-preview
+        h2 Draft Preview
+        div.draft-text(ng-bind-html="draft.content.text")
+

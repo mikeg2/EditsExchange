@@ -1,0 +1,23 @@
+div
+    a(href="{{ urls.getUrlForUser(edit.editor.id) }}")
+        .user-identifier
+            img(ng-src="{{ edit.editor.profilePicture.url }}")
+            span.username {{ edit.editor.username }}
+    .edit-item-body
+        .overall-comments-wrapper
+            span.overall-comments(ng-bind-html="edit.overallComments")
+            span.no-overall-comments(ng-show="!edit.overallComments || edit.overallComments.length == 0") No overall comments
+        .edit-summery-wrapper
+            h2 Edit Summery
+            .edit-summery(edit-content-viewer="edit" content="edit.editSummery")
+        .edit-options
+            li(ng-click="showFull = !showFull" ng-init="showFull=false") View Full
+            li(ng-click="sendThanks()") Thank {{ edit.editor.username }}
+            li(ng-click="showChat = !showChat") Message {{ edit.editor.username }}
+    modal.edit-modal(show="showFull" title="edit.editor.username + 's Edits'")
+        .overall-comments-wrapper
+            span.overall-comments(ng-bind-html="edit.overallComments")
+            span.no-overall-comments(ng-show="!edit.overallComments || edit.overallComments.length == 0") No overall comments
+        .edit-content(edit-content-viewer="edit" content="edit.content")
+    modal.chat-modal(show="showChat" title="'Chat with ' + edit.editor.username" thumbnail="edit.editor.profilePicture.url" )
+        chat-display.chat(me="user" with-users="edit.editor")

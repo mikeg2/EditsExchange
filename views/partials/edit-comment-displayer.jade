@@ -1,0 +1,4 @@
+ul
+    li(data-range-id="{{ comment.id }}" ng-repeat="comment in edit.comments | orderBy:'locationInText'" ng-click="commentEditor.activeComment = comment" ng-class="{selected: commentEditor.activeComment.id==comment.id}")
+        span.quote {{ getQuote(comment)|cut:true:100 }}
+        span.comment {{ comment.text|cut:true:140 }}

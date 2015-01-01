@@ -1,0 +1,45 @@
+extends ../skeleton
+block content
+    div.form-like#user-settings-form
+        div.user-settings.form-section(ng-controller="userSettingsFormController")
+            ul.error-box(ng-show="errors != undefined && errors.length != 0")
+                li(ng-repeat="error in errors") {{ error.msg }}
+            ul.success-box(ng-show="successes != undefined && successes.length != 0")
+                li(ng-repeat="success in successes") {{ success.msg }}
+            .form-group
+                label(for="username") Username
+                input(type="textfield" ng-model="userEditable.username")
+            .form-group
+                label(for="username") Email
+                input(type="textfield" ng-model="userEditable.email")
+            .form-group
+                label(for="username") Profile Picture
+                .drop-box(ng-file-drop="pickProfilePicture($files[0])" )
+                    span.message Drop Photo
+                    img(src="{{ userEditable.profilePicture.url }}")
+            span.submit-button(ng-click="saveSettings()") Save Changes
+        div.user-password.form-section(ng-controller="userPasswordFormController")
+            ul.error-box(ng-show="errors != undefined && errors.length != 0")
+                li(ng-repeat="error in errors") {{ error.msg }}
+            ul.success-box(ng-show="successes != undefined && successes.length != 0")
+                li(ng-repeat="success in successes") {{ success.msg }}
+            .form-group
+                label(for="old-password") Old Password
+                input(type="password" ng-model="oldPassword")
+            .form-group
+                label(for="password") New Password
+                input(type="password" ng-model="newPassword")
+            .form-group
+                label(for="password") Confirm New Password
+                input(type="password" ng-model="password2")
+            span.submit-button(ng-click="changePassword()") Change Password
+
+block css
+  link(rel='stylesheet', href='/styles/user-settings.css')
+
+block jscript
+  script(src="/js/ang/app/user/userSettings/userSettingsApp.js")
+
+block vars
+  - var page = "User Settings"
+  - var custom = true

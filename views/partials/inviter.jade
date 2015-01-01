@@ -1,0 +1,8 @@
+form
+    .form-group
+        label(for="users") Users
+        user-input(ng-model="users")
+    .form-group
+        label(for="emails") Emails
+        tags-input(display-property="emails" place-holder="Type in emails" ng-model="emails")
+    .modal-button#invite-friends-submit(ng-click="submit()") Invite Fellow Writers

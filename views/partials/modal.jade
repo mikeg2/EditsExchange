@@ -1,0 +1,9 @@
+dialog(ng-class="{hidden: !show, shown: show}")
+    .modal-overlay(ng-click='hideModal()')
+    section.modal-body
+        header
+            span.hide-button(ng-click='hideModal()' title="Close") X
+            .modal-title
+                img.thumbnail(ng-show="thumbnail !== undefined" ng-src="{{ thumbnail }}")
+                h2.title {{ title }}
+        article.modal-content(scroll-position="initialScrollPosition" ng-transclude)

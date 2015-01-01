@@ -1,0 +1,112 @@
+@import "./master";
+@import "./style";
+
+html, body {
+    height: 100%;
+}
+
+.main-body {
+    margin-top: 0.75em;
+    height: calc(~"100% - 5em")
+}
+
+@chat-list-width: 13em;
+@color-chat-background: @color-highlight;
+.chat-list {
+    direction: rtl;
+    height: 100%;
+    overflow-y: auto;
+    float: left;
+    width: @chat-list-width;
+    background-color: @color-off-mid;
+    li {
+        direction: ltr;
+        list-style: none;
+        position: relative;
+        z-index: 100;
+        cursor: pointer;
+        @height: 4em;
+        cursor: pointer;
+        transition: all 0.2s;
+        // padding-top: 1em; // This and next line get ride of top shadow
+        // margin-top: -1em;
+        // padding-right: 1em; // This and next line get ride of right shadow
+        // margin-right: -1em;
+        height: @height;
+        clear: none;
+        @thumbnail-size: @height - 1em;
+        @spacing: 0.2em;
+        .thumbnail, .username, .user-tag {
+            vertical-align: middle;
+        }
+        .thumbnail {
+            display: inline-block;
+            width: @thumbnail-size;
+            height: @thumbnail-size;
+            margin: (@height - @thumbnail-size)/2;
+            .pf('border-radius', '0.3em');
+            outline: none;
+        }
+        .username {
+            font-size: 1em;
+            line-height: @height;
+            margin-left: @spacing;
+            height: @height;
+            display: inline-block;
+            width: auto;
+        }
+        &.selected {
+            z-index: 1000;
+            .pf('box-shadow', '0 0 0.25em #000000');
+            background-color: @color-chat-background;
+        }
+        &:hover:not(.selected) {
+            background-color: @color-darker;
+        }
+        &.selected {
+            background-color: @color-chat-background;
+        }
+    }
+}
+
+.chat-display-container {
+    &.active {
+        .pf('box-shadow', '0 0 0.25em #000000');
+    }
+    .pf('box-sizing', 'border-box');
+    padding-left: 0.3em;
+    background-color: @color-chat-background;
+    height: 100%;
+    float: left;
+    width: calc(~"100% - @{chat-list-width}");
+}
+
+.chat-display-message {
+    margin-top: 1em;
+    width: 100%;
+    display: block;
+    text-align: center;
+    font-size: 2em;
+    opacity: 0.7;
+    color: @color-darker;
+}
+
+.new-chat-button {
+    .light-button();
+    @margin-right: 1em;
+    width: calc(~"100%");
+    .pf('box-sizing', 'border-box');
+    padding: 0.5em;
+    border: 0.3em solid @color-background;
+}
+
+.chat {
+    position: relative;
+    height: 100%;
+    .message-container {
+        padding-top: 1em;
+    }
+    .send-message-container {
+        background-color: @color-chat-background;
+    }
+}

@@ -1,0 +1,19 @@
+@import "./style-lg.less";
+
+.main-body {
+    margin-top: 1.75em;
+}
+
+#user-settings-form {
+    @form-font-size: 1.4em;
+    font-size: @form-font-size;
+    input, .submit-button {
+        display: block;
+        margin-top: 0.5em;
+        font-size: 0.75em * @form-font-size;
+    }
+    .submit-button {
+        &:extend(.general-button all);
+        display: inline-block;
+    }
+}
