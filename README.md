@@ -1,5 +1,5 @@
 # Edits Exchange
-The bulk of the development for editing-focused writing community.
+The bulk of the development for an editing-focused writing community.
 
 # TODO
 
