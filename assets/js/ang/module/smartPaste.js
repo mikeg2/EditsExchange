@@ -1,5 +1,6 @@
 define([
-'angular',
+    'angular',
+    'tinymce'
 ], function(angular) {
 
 angular.module('smartPaste', []).directive('smartPaste', [function(){

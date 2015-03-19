@@ -72,17 +72,17 @@ userPageApp
             return APIUsers.one(userId).getList('groups', {
                 whitelist: ['id']
             }).then(function(groups) {
-                console.log("GROUPS: ", JSON.stringify(groups));
-                for (var i = groups.length - 1; i >= 0; i--) {
-                    var group = groups[i];
-                    console.log("GROUP: ", group);
-                    if (group.id == groupId) {
-                        console.log("TRUE");
-                        return true;
-                    }
-                }
-                return false;
+                return containsObjectWithParam(groups, 'id', groupId);
             });
+        }
+        function containsObjectWithParam(list, paramKey, val) {
+            for (var i = list.length - 1; i >= 0; i--) {
+                var item = list[i];
+                if (item[paramKey] == val) {
+                    return true;
+                }
+            }
+            return false;
         }
     });
 

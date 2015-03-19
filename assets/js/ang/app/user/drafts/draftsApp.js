@@ -15,7 +15,7 @@ require([
     'angular-sanatize'
 ], function(angular) {
 
-var draftsApp = angular.module('draftsApp', ["URLManager", "inviter", "ngSanitize", "API", "userInput", "draftItem", "draftDisplay", "fuse", "modal", "smartPaste", "uploadToText", "angularFileUpload"]);
+var draftsApp = angular.module('draftsApp', ["util", "URLManager", "inviter", "ngSanitize", "API", "userInput", "draftItem", "draftDisplay", "fuse", "modal", "smartPaste", "uploadToText", "angularFileUpload"]);
 
 //TODO Create a on-enter directive and make it so that if you hit enter in the search bar, it pops up the first option
 draftsApp.controller('draftListAreaController', function($scope, $controller, $rootScope, APIUsers) {

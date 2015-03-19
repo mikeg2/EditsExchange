@@ -20,22 +20,21 @@ editEditorApp.factory('AutoSaver', function($timeout) {
                 newState = options.stateCallback();
                 var hasChanged = thisAutoSave.hasChanged(thisAutoSave.oldState, newState);
                 if (hasChanged) {
-                    thisAutoSave.hasChangedManual = false;
-                    thisAutoSave.oldState = angular.copy(newState);
-                    options.saving();
-                    console.log("SAVING: " + JSON.stringify(newState));
-                    options.saver(newState, options.saved, options.error);
-
+                    thisAutoSave.save(newState);
                 }
                 $timeout(tick, options['timeout'] || DEFAULT_TIME_OUT);
             })();
+        },
+        save: function(newState) {
+            this.hasChangedManual = false;
+            this.oldState = angular.copy(newState);
+            options.saving();
+            options.saver(newState, options.saved, options.error);
         },
         hasChanged: function(oldState, newState) {
             if (oldState === undefined && newState !== undefined) {
                 return true;
             } else if (this.options['autoDetectChange']) {
-                console.log("OLD STATE: ", JSON.stringify(oldState));
-                console.log("NEW STATE", JSON.stringify(newState));
                 return !deepCompare(oldState, newState) || this.hasChangedManual;
             } else {
                 return this.hasChangedManual;

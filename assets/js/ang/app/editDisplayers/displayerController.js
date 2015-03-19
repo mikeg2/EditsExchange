@@ -53,11 +53,11 @@ define([
                 $scope.$on('commentAdded', function(event, comment) {
                     $scope.commentEditor.activeComment = comment;
                 });
+
                 var origin = $scope.origin = {
                     x: 0,
                     y: 0
                 };
-
                 (function setUpPopupAutoHide() {
                     PopupService.activateAutoHide($scope);
                     $scope.$on('editorScrolled', PopupService.manualAutoHide);

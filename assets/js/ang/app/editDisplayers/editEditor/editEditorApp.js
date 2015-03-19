@@ -46,7 +46,7 @@ angular.module('editEditorApp').controller('editEditorController', function($roo
                 fnct();
             }
         });
-    })(function retrieveEditAndStartSaving() {
+    })(function onInit() {
         console.log("DRAFTID: " + $scope.draftID);
         var draftBase = APIDrafts.one($scope.draftID);
         draftBase.all('user-edits').get($scope.draftEditorID)
@@ -55,27 +55,7 @@ angular.module('editEditorApp').controller('editEditorController', function($roo
                     editObject = editREST;
                     editObject.comments = commentsREST;
                     $scope.edit = editObject;
-                    AutoSaver.startAutoUpdater({
-                        saver: function(toSave, success, error) {
-                            toSave.put().then(function() {
-                                toSave.customPUT(toSave.comments, 'comments').then(success, error);
-                            }, error);
-                        },
-                        saving: saving,
-                        saved: saved,
-                        error: error,
-                        autoDetectChange: false,
-                        timeout: 3000,
-                        stateCallback: function() {
-                            return $scope.edit;
-                        }
-                    });
-                    $scope.$watch('edit', function(newVal) {
-                        AutoSaver.stateChanged();
-                    }, true);
-                    $scope.$on('commentModelChanged', function() {
-                        AutoSaver.stateChanged();
-                    });
+                    onEditLoaded();
                 });
             });
         draftBase.get({
@@ -84,6 +64,34 @@ angular.module('editEditorApp').controller('editEditorController', function($roo
             $scope.draft = draft;
         });
     });
+
+    function onEditLoaded() {
+        setupAutoSaver();
+    }
+
+    function setupAutoSaver() {
+        AutoSaver.startAutoUpdater({
+            saver: function(toSave, success, error) {
+                toSave.put().then(function() {
+                    toSave.customPUT(toSave.comments, 'comments').then(success, error);
+                }, error);
+            },
+            saving: saving,
+            saved: saved,
+            error: error,
+            autoDetectChange: false,
+            timeout: 3000,
+            stateCallback: function() {
+                return $scope.edit;
+            }
+        });
+        $scope.$watch('edit', function(newVal) {
+            AutoSaver.stateChanged();
+        }, true);
+        $scope.$on('commentModelChanged', function() {
+            AutoSaver.stateChanged();
+        });
+    }
 
     $scope.newComment = function() {
         id = CommentLikeService.newComment().id;

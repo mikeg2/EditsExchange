@@ -45,7 +45,7 @@ require.config({
             deps: ['angular']
          },
          'restangular': {
-            deps: ['angular']
+            deps: ['angular', 'underscore']
          },
          'sails.io': {
             deps: ['socket.io']
