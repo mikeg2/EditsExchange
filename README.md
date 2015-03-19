@@ -17,4 +17,4 @@ The bulk of the development for an editing-focused writing community.
 - Add authorization/security
 - Add tests with Karma/Protractor
 - Switch frontend dep. management to bower
-- *Refactor* (The code structure is fine, but the code itself is messy and needs to be cleaned up to improve readability)
+- **Refactor** (The code structure is fine, but the code itself is messy and needs to be cleaned up to improve readability)
